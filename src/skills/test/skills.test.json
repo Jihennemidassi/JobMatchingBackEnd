@@ -1,0 +1,31 @@
+{
+  "skills": [
+    {
+      "id": 1,
+      "title": "JavaScript",
+      "description": "Programming language for web development",
+      "skillMatching": [],
+      "createAt": "2024-01-20T10:00:00Z",
+      "updateAt": null,
+      "createBy": 1,
+      "updatedBy": null,
+      "isActive": true
+    },
+    {
+      "id": 2,
+      "title": "TypeScript",
+      "description": "Typed superset of JavaScript",
+      "skillMatching": [
+        {
+          "id": 1,
+          "idSkill": 2
+        }
+      ],
+      "createAt": "2024-01-20T10:00:00Z",
+      "updateAt": "2024-01-20T11:00:00Z",
+      "createBy": 1,
+      "updatedBy": 1,
+      "isActive": true
+    }
+  ]
+}

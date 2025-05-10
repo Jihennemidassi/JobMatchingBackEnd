@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "title": "JavaScript",
+  "description": "Programming language for web development",
+  "skillMatching": [
+    {
+      "id": 1,
+      "idSkill": 1
+    }
+  ],
+  "createAt": "2024-01-20T10:00:00Z",
+  "updateAt": "2024-01-20T11:00:00Z",
+  "createBy": 1,
+  "updatedBy": 1,
+  "isActive": true
+}
