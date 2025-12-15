@@ -9,12 +9,13 @@ import { ExperienceModule } from 'src/experience/experience.module';
 import { SkillMatching } from 'src/skills/entities/skillMatching';
 import { ExperienceMatching } from 'src/experience/entities/experienceMatching';
 import { RecruteurModule } from 'src/recruteur/recruteur.module';
-import { CandidatModule } from 'src/candidat/candidat.module';
-import { Candidat } from 'src/candidat/entities/candidat.entity';
+import { Resume } from 'src/resume/entities/resume.entity';
+import { Recruteur } from 'src/recruteur/entities/recruteur.entity';
+import { Skill } from 'src/skills/entities/skill.entity';
 
 @Module({
   controllers: [PosteController],
   providers: [PosteService],
-  imports:[TypeOrmModule.forFeature([Poste , SkillMatching, ExperienceMatching, Candidat]),RecruteurModule,SkillsModule,ExperienceModule]
+  imports:[TypeOrmModule.forFeature([Poste , SkillMatching, ExperienceMatching, Resume, Recruteur, Skill , Experience]),RecruteurModule,SkillsModule,ExperienceModule]
 })
 export class PosteModule {}

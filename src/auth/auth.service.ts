@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
-import { LoginUser } from 'src/user/dto/create-user.dto';
+import { CreateUserDto, LoginUser } from 'src/user/dto/create-user.dto';
 import { User, UserRole } from 'src/user/entities/user.entity';
 import { jwtConstants } from './constants';
 
@@ -15,24 +15,55 @@ export class AuthService {
         private jwtService: JwtService
     ) {}
 
-    async ValidateUser(email: string, password: string): Promise<Partial<User>> {
+    async ValidateUser(email: string, mot_de_passe: string): Promise<Partial<User>> {
         const user = await this.userService.FindByEmail(email);
         
         if (!user) {
             throw new UnauthorizedException('Invalid credentials');
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await bcrypt.compare(mot_de_passe, user.mot_de_passe);
         if (!isPasswordValid) {
             throw new UnauthorizedException('Invalid credentials');
         }
 
         // Strip sensitive data and return
-        const { password: _, ...safeUser } = user;
+        const { mot_de_passe: _, ...safeUser } = user;
         return safeUser;
     }
 
-    async signIn(loginDto: LoginUser) {
+   // auth.service.ts
+async sinscrire(createUserDto: CreateUserDto): Promise<{ user: Partial<User>, token: string }> {
+  // 1. First check if user exists
+  const existingUser = await this.userService.FindByEmail(createUserDto.email);
+  if (existingUser) {
+    throw new ConflictException('Email already exists');
+  }
+
+  // 2. Create the user with hashed password
+  const user = await this.userService.createUser({
+    ...createUserDto,
+    // Ensure password is hashed in createUser method
+  });
+
+  // 3. Generate JWT token
+  const payload = { 
+    sub: user.id, 
+    email: user.email, 
+    role: user.role 
+  };
+  const token = this.jwtService.sign(payload);
+
+  // 4. Remove sensitive data from response
+  const { mot_de_passe, ...safeUser } = user;
+
+  return {
+    user: safeUser,
+    token
+  };
+}
+
+    async seConnecter(loginDto: LoginUser) {
         const user = await this.userService.FindByEmail(loginDto.email);
         console.log(user);
         if (!user) {
@@ -40,7 +71,7 @@ export class AuthService {
         }
       
         // 2. Compare passwords
-        const isPasswordValid = await bcrypt.compare(loginDto.password, user.password);
+        const isPasswordValid = await bcrypt.compare(loginDto.mot_de_passe, user.mot_de_passe || '');
         if (!isPasswordValid) {
           throw new UnauthorizedException('Invalid credentials');
         }

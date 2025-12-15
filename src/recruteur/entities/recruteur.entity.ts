@@ -13,8 +13,8 @@ import { Entity, Column, PrimaryGeneratedColumn,OneToMany,OneToOne, ManyToOne, J
         @Column('text',{name:"entreprise",nullable:true,})
         entreprise:string
 
-        @OneToMany(()=>Poste,(poste:Poste)=>poste.recruteur)
-        postes:Poste[]
+        @OneToMany(()=>Poste,(idPoste:Poste)=>idPoste.recruteur)
+        idPoste:Poste[]
 
         @OneToOne(() => User, user => user.recruteur)
         @JoinColumn({ name: "idUser" })

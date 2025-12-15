@@ -9,35 +9,18 @@ import { Experience } from './experience.entity';
         
         @PrimaryGeneratedColumn()
         id: number;
-        @Column('integer',{name:"years",nullable:true})
-        years:number;
-       @ManyToOne(() => Poste, (poste) => poste.experienceMatching)
+        @Column('integer',{name:"nbExperience",nullable:true})
+        nbExperience:number;
+       @ManyToOne(() => Poste, (idPoste) => idPoste.experienceMatching)
         @JoinColumn({ name: 'idPoste' })
         idPoste:Number;
-        @ManyToOne(() => Resume, (resume) => resume.experienceMatching)
-        @JoinColumn({ name: 'idResume' })
-        idResume:Number 
+        @ManyToOne(() => Resume, (idCV) => idCV.experienceMatching)
+        @JoinColumn({ name: 'idCV' })
+        idCV:Number 
         @ManyToOne(() => Experience, (experience) => experience.experienceMatching)
         @JoinColumn({ name: 'idExperience' })
         idExperience: number;
-         @Column('date',{name:"createAt",nullable:true})
-                createAt:Date;
-                @Column('date',{name:"update",nullable:true})
-                updateAt:Date;
-                @Column('integer',{name:"createby",nullable:true})
-                createBy:number;
-                @Column('integer',{name:"updateBy",nullable:true})
-                updatedBy: number;
-                @Column('boolean',{name:"active",nullable:true})
-                isActive:boolean
-                @BeforeInsert()
-                CreateATDate(): void{
-                   this.createAt=new Date()
-                }
-                @BeforeUpdate()
-                updateATDate() :void{
-                        this.updateAt= new Date()
-                }
+        
        
      }
 

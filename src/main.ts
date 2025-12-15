@@ -11,7 +11,11 @@ async function bootstrap() {
   .setVersion('1.0')
   .addTag('api')
   .build();
-  app.enableCors();
+  app.enableCors({
+    origin: 'http://localhost:4200', // Your Angular app URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Explicitly allow DELETE
+    credentials: true,
+  });
   app.useGlobalPipes(new ValidationPipe());
 
 const document = SwaggerModule.createDocument(app, config);

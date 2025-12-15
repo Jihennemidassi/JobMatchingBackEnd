@@ -20,11 +20,11 @@ export class ExperienceService {
   }
 
   findOne(id: number) {
-    return this.ExperienceRepository.findOne({where:{id:id}});
+    return this.ExperienceRepository.findOne({where:{idExperience:id}});
   }
 
   async update(id: number, UpdateexperienceDto: UpdateExperienceDto) {
-    let experience= await this.ExperienceRepository.preload({id:+id,
+    let experience= await this.ExperienceRepository.preload({idExperience:+id,
       ...UpdateexperienceDto
     })
     if(!experience){

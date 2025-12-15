@@ -1,11 +1,13 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 export class CreateRecruteurDto {
     email:string;
-    password:string;
-    name:string;
-      
+    mot_de_passe:string;
+    prenom:string;
+    entreprise:string;
+    nom:string;
+
   }
-  export class LoginAdmin{
+  export class LoginRecruteur{
        
       @IsEmail()
     @IsNotEmpty()
@@ -13,5 +15,5 @@ export class CreateRecruteurDto {
   
     @IsString()
     @IsNotEmpty()
-    password: string;
+    mot_de_passe: string;
   }

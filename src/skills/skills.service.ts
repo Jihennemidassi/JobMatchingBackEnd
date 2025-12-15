@@ -19,7 +19,7 @@ export class SkillsService {
   }
 
   findOne(id: number) {
-    return this.skillRepository.findOne({where:{id:id}});
+    return this.skillRepository.findOne({where:{idSkill:id}});
   }
 
   async update(id: number, UpdateSkillDto: UpdateSkillDto) {

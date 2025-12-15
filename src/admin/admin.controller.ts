@@ -10,6 +10,10 @@ import { UpdateAdminDto } from './dto/update-admin.dto';
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
+  @Get('stats')
+  async getStats() {
+    return this.adminService.getDashboardStats();
+  }
   @Post('create-admin')
   create(@Body() createAdminDto: CreateAdminDto) {
     return this.adminService.create(createAdminDto);

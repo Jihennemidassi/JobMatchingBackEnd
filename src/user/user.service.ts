@@ -24,19 +24,30 @@ export class UserService {
 
   async createUser(createUserDto: CreateUserDto) {
     const user = new User();
-    user.name = createUserDto.name;
+    user.prenom = createUserDto.prenom;
+     user.token = this.generateAlphabeticToken(50);
+    user.nom = createUserDto.nom;
     user.email = createUserDto.email;
-    user.password = (await (this.hashPassword(createUserDto.password))).toString();
+    user.mot_de_passe = (await (this.hashPassword(createUserDto.mot_de_passe))).toString();
     user.role = createUserDto.role; 
-    if (createUserDto.role === UserRole.ADMIN) {
+
+   
+    switch(createUserDto.role) {
+    case UserRole.ADMIN:
       user.admin = new Administrator();
-    } 
-    else if (createUserDto.role === UserRole.RECRUTEUR) {
+      break;
+    case UserRole.RECRUTEUR:
       user.recruteur = new Recruteur();
-    }
-    else if (createUserDto.role === UserRole.CANDIDAT) {
+      // Set entreprise on the Recruteur entity, not User
+      if (createUserDto.entreprise) {
+        user.recruteur.entreprise = createUserDto.entreprise;
+      }
+      break;
+    case UserRole.CANDIDAT:
       user.candidat = new Candidat();
-    }
+      break;
+  }
+
   
     return this.userRepository.save(user); // Automatically saves the role too
   }
@@ -52,8 +63,8 @@ export class UserService {
 
     // 2. Compare passwords
     const isPasswordValid = await bcrypt.compare(
-      loginUser.password,
-      user.password
+      loginUser.mot_de_passe,
+      user.mot_de_passe
     );
 
     if (!isPasswordValid) {
@@ -65,7 +76,7 @@ export class UserService {
     await this.userRepository.save(user);
 
     // 4. Return user data without password
-    const { password, ...result } = user;
+    const { mot_de_passe, ...result } = user;
     return result;
   }
 
@@ -76,9 +87,9 @@ export class UserService {
     ).join('');
   }
 
-  async hashPassword(password: string): Promise<string> {
+  async hashPassword(mot_de_passe: string): Promise<string> {
     const saltRounds = 10;
-    return  await (bcrypt.hash(password, saltRounds))
+    return  await (bcrypt.hash(mot_de_passe, saltRounds))
   }
 
   async findAll() {

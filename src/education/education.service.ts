@@ -16,15 +16,15 @@ export class EducationService {
    }
  
    findAll() {
-     return this.EducationRepository.findAndCount({relations:["candidats"]})
+     return this.EducationRepository.findAndCount()
    }
  
    findOne(id: number) {
-     return this.EducationRepository.findOne({where:{id:id},relations:["candidats"]});
+     return this.EducationRepository.findOne({where:{idEducation:id}});
    }
  
    async update(id: number, UpdateEducationDto: UpdateEducationDto) {
-     let Education= await this.EducationRepository.preload({id:+id,
+     let Education= await this.EducationRepository.preload({idEducation:+id,
        ...UpdateEducationDto
      })
      if(!Education){

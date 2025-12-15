@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { UserRole } from 'src/user/entities/user.entity';
 export class CreateAdminDto {
   email:string;
-  password:string;
-  name:string;
-    
+  mot_de_passe:string;
+  prenom:string;
+    nom:string;
+
 }
 export class LoginAdmin{
      
@@ -15,5 +15,5 @@ export class LoginAdmin{
 
   @IsString()
   @IsNotEmpty()
-  password: string;
+  mot_de_passe: string;
 }

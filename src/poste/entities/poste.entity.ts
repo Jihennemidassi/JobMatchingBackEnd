@@ -11,41 +11,29 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOn
     export class Poste {
         
         @PrimaryGeneratedColumn()
-        id: number;
-        @Column('text',{name:"poste",nullable:true,})// nom de column dans le base de donnée 
-        post:string;
+        idPoste: number;
         
-        @Column('text',{name:"description",nullable:true,})
-        description:string
-        @Column('date',{name:"createAt",nullable:true})
-        createAt:Date;
-        @Column('date',{name:"update",nullable:true})
-        updateAt:Date;
-        @Column('integer',{name:"createby",nullable:true})
-        createBy:number;
-        @Column('integer',{name:"updateBy",nullable:true})
-        updatedBy: number;
-        @Column('boolean',{name:"active",nullable:true})
-        isActive:boolean
-        @BeforeInsert()
-        CreateATDate(): void{
-           this.createAt=new Date()
-        }
-        @BeforeUpdate()
-        updateATDate() :void{
-                this.updateAt= new Date()
-        }
+        @Column('text',{name:"titrePoste",nullable:true,})// nom de column dans le base de donnée 
+        titrePoste:string;
         
-        @Column('text',{name:"nbexperience",nullable:true})
-        nbexperience:string
-        @ManyToOne(()=>Recruteur,(recruteur:Recruteur)=>recruteur.postes)
-        recruteur:Recruteur[]
-       @OneToMany(() => SkillMatching, (skill: SkillMatching) => skill.idPoste)
-         skillsMatching: SkillMatching[];
-         @OneToMany(() => ExperienceMatching, (experience: ExperienceMatching) => experience.idPoste)
+        @Column('text',{name:"descriptionPoste",nullable:true,})
+        descriptionPoste:string
+        
+        @ManyToOne(()=>Recruteur,(recruteur:Recruteur)=>recruteur.idPoste)
+        recruteur:Recruteur
+
+       @OneToMany(() => SkillMatching, (idSkill: SkillMatching) => idSkill.idPoste, {cascade: true,onDelete:'CASCADE'})
+         skillMatching: SkillMatching[];
+
+         @OneToMany(() => ExperienceMatching, (experience: ExperienceMatching) => experience.idPoste,  {cascade: true,onDelete:'CASCADE'})
          experienceMatching: ExperienceMatching[];
-        @ManyToMany(()=>Education,(education:Education)=>education.posteId)
-        education:Education[]
+
+        @OneToMany(()=>Education,(idEducation:Education)=>idEducation.idPoste)
+        idEducation:Education[]
+        
+        @ManyToMany(() => Resume, (idCV) => idCV.poste)
+        @JoinTable({ name: 'poste_resume'  }) // Use your existing jointable name
+        resume: Resume[];
       
         
     }

@@ -9,34 +9,16 @@ import { Skill } from './skill.entity';
         
         @PrimaryGeneratedColumn()
         id: number;
-       @ManyToOne(() => Poste, (poste) => poste.skillsMatching)
+       @ManyToOne(() => Poste, (poste) => poste.skillMatching)
         @JoinColumn({ name: 'idPoste' })
         idPoste:Number;
-        @ManyToOne(() => Resume, (resume) => resume.skillsMatching)
-        @JoinColumn({ name: 'idResume' })
-        idResume:Number 
-        @ManyToOne(() => Skill, (skill) => skill.skillMatching)
+        @ManyToOne(() => Resume, (idCV) => idCV.skillMatching)
+        @JoinColumn({ name: 'idCV' })
+        idCV:Number 
+        @ManyToOne(() => Skill, (idSkill) => idSkill.skillMatching)
         @JoinColumn({ name: 'idSkill' })
         idSkill: any;
-
-         @Column('date',{name:"createAt",nullable:true})
-                createAt:Date;
-                @Column('date',{name:"update",nullable:true})
-                updateAt:Date;
-                @Column('integer',{name:"createby",nullable:true})
-                createBy:number;
-                @Column('integer',{name:"updateBy",nullable:true})
-                updatedBy: number;
-                @Column('boolean',{name:"active",nullable:true})
-                isActive:boolean
-                @BeforeInsert()
-                CreateATDate(): void{
-                   this.createAt=new Date()
-                }
-                @BeforeUpdate()
-                updateATDate() :void{
-                        this.updateAt= new Date()
-                }
        
      }
+     
 

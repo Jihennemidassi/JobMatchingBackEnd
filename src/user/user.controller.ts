@@ -43,7 +43,7 @@ export class UserController {
  // userSignup(@Body() signupUser: SignupUser) {
    // return this.userService.login(signupUser);}
 
-  @UseGuards( JwtAuthGuard)
+  // @UseGuards( JwtAuthGuard)
   @ApiBearerAuth()
   @Get('liste-user')
   findAll() {

@@ -1,6 +1,6 @@
 export class CreateSkillDto {
-  description: string;
-  title: string;
+  titreSkill: string;
   resumeId: number;
+  posteId: number;
   id: number;
 }

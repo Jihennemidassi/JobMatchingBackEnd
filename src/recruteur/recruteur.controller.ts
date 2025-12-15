@@ -31,4 +31,13 @@ export class RecruteurController {
   remove(@Param('id') id: string) {
     return this.recruteurService.remove(+id);
   }
+
+  @Get('stats')
+  async getStats() {
+    return this.recruteurService.getDashboardStats();
+  }
+  @Get('poste-by-recruteur/:userId')
+  findByRecruteur(@Param('userId') recruteurId: number) {
+    return this.recruteurService.findPosteByCandidat(recruteurId);
+  }
 }

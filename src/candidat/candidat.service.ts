@@ -16,9 +16,11 @@ export class CandidatService {
   ) {}
   async create(createCandidatDto: CreateCandidatDto) {
     const user = await this.userService.createUser({
-       name: createCandidatDto.name,
+       nom: createCandidatDto.nom,
+       prenom:createCandidatDto.prenom,
        email: createCandidatDto.email,
-       password: createCandidatDto.password,
+       mot_de_passe: createCandidatDto.mot_de_passe,
+        //  entreprise:undefined,
        role: UserRole.CANDIDAT// Assuming you have this enum
    });
      // Then create the Admin linked to the User
